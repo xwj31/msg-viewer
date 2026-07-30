@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
+import * as path from 'path';
 import MsgReader from '@kenjiuno/msgreader';
 import { FieldsData, AttachmentData } from '@kenjiuno/msgreader';
 
@@ -20,6 +21,20 @@ export function activate(context: vscode.ExtensionContext) {
       'msgViewer.preview',
       new MsgEditorProvider()
     )
+  );
+
+  context.subscriptions.push(
+    vscode.lm.registerMcpServerDefinitionProvider('msgViewer.mcp', {
+      provideMcpServerDefinitions: () => [
+        new vscode.McpStdioServerDefinition(
+          'MSG Viewer',
+          process.execPath,
+          [context.asAbsolutePath(path.join('out', 'mcp.js'))],
+          // The extension host's execPath is Electron; this makes it behave as plain Node
+          { ELECTRON_RUN_AS_NODE: '1' }
+        ),
+      ],
+    })
   );
 }
 

@@ -15,31 +15,47 @@ Double-click any `.msg` file and get a clean, readable preview of:
 - **Headers** — raw transport headers at the bottom
 - **Dark theme** — respects VS Codium's theme, strips hardcoded colors so text is always visible
 
+## MCP server
+
+The extension bundles an [MCP](https://modelcontextprotocol.io) stdio server so AI agents can read `.msg` files too. In VS Codium / VS Code 1.102+ it is registered automatically (via the `mcpServerDefinitionProviders` contribution) and shows up as **MSG Viewer** in the MCP server list.
+
+Tools:
+
+- `read_msg` — parse a `.msg` file: subject, sender, To/Cc/Bcc, date, plain-text body (optionally HTML), and attachment list
+- `extract_msg_attachment` — write one attachment to disk by index
+
+To use it outside the editor (e.g. Claude Code), point any MCP client at the bundled server:
+
+```bash
+claude mcp add msg-viewer -- node ~/.vscode-oss/extensions/hovecapital.msg-viewer-*/out/mcp.js
+```
+
 ## How it works
 
 Uses [`@kenjiuno/msgreader`](https://github.com/kenjiuno/msgreader) — a pure JavaScript library that parses the Outlook Item (.msg) binary format. No network calls, no external API, no data leaves your machine.
 
 ## Install
 
-1. Download the `.vsix` from [releases](https://github.com/will/msg-viewer/releases) or build it yourself
-2. In VS Codium, open the Extensions view (⇧⌘X) → ... → **Install from VSIX**
-3. Pick the `.vsix` file — done
-
-Or via CLI:
+From the [Open VSX Registry](https://open-vsx.org/extension/hovecapital/msg-viewer) (VS Codium's built-in extension gallery) — search for **MSG Viewer**, or:
 
 ```bash
-codium --install-extension msg-viewer-0.0.1.vsix
+codium --install-extension hovecapital.msg-viewer
 ```
+
+Or grab the `.vsix` from [releases](https://github.com/xwj31/msg-viewer/releases) and install it via Extensions view → ... → **Install from VSIX**.
 
 ## Build from source
 
 ```bash
-git clone https://github.com/will/msg-viewer
+git clone https://github.com/xwj31/msg-viewer
 cd msg-viewer
 npm install
-npx tsc
-npx @vscode/vsce package
+npm run package   # produces msg-viewer-<version>.vsix
 ```
+
+## Releases
+
+Versioning and changelogs are automated with [release-please](https://github.com/googleapis/release-please). Commits to `main` must follow [Conventional Commits](https://www.conventionalcommits.org) (`feat:`, `fix:`, `chore:`, …); release-please maintains a release PR, and merging it tags a release, updates `CHANGELOG.md`, and publishes to Open VSX.
 
 ## License
 

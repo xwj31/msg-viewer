@@ -1,16 +1,36 @@
 {
   "name": "msg-viewer",
   "displayName": "MSG Viewer",
-  "description": "Preview Outlook .msg files with rich HTML rendering — subject, sender, recipients, body, and inline attachments",
+  "description": "Preview Outlook .msg files with rich HTML rendering — subject, sender, recipients, body, and inline attachments. Includes an MCP server so AI agents can read .msg files too.",
   "version": "0.0.1",
-  "publisher": "will",
+  "publisher": "hovecapital",
+  "icon": "icon.png",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xwj31/msg-viewer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/xwj31/msg-viewer/issues"
+  },
+  "homepage": "https://github.com/xwj31/msg-viewer#readme",
+  "keywords": [
+    "msg",
+    "outlook",
+    "email",
+    "viewer",
+    "preview",
+    "mcp"
+  ],
   "engines": {
-    "vscode": "^1.90.0"
+    "vscode": "^1.102.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onMcpServerDefinitionProvider:msgViewer.mcp"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "customEditors": [
@@ -29,20 +49,32 @@
         "command": "msgViewer.preview",
         "title": "Preview MSG File"
       }
+    ],
+    "mcpServerDefinitionProviders": [
+      {
+        "id": "msgViewer.mcp",
+        "label": "MSG Viewer"
+      }
     ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./"
+    "compile": "npm run typecheck && node esbuild.js",
+    "watch": "tsc -watch -p ./",
+    "typecheck": "tsc --noEmit -p ./",
+    "package": "vsce package --no-dependencies"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
-    "@types/vscode": "^1.90.0",
+    "@types/vscode": "~1.102.0",
+    "@vscode/vsce": "^3.9.2",
+    "esbuild": "^0.28.1",
+    "ovsx": "^1.0.2",
     "typescript": "^5.7.0"
   },
   "dependencies": {
-    "@kenjiuno/msgreader": "^1.28.0"
-  },
-  "license": "MIT"
+    "@kenjiuno/msgreader": "^1.28.0",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.4.3"
+  }
 }

@@ -1,0 +1,13 @@
+.vscode/**
+.github/**
+src/**
+node_modules/**
+out/**/*.map
+tsconfig.json
+esbuild.js
+scripts/**
+*.vsix
+.gitignore
+release-please-config.json
+.release-please-manifest.json
+package-lock.json
