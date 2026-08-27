@@ -225,7 +225,7 @@ function buildPreviewHtml(
   </div>` : ''}
 
   <div class="section">
-    <div id="body-html" class="body-wrap" ${hasHtml ? '' : 'style="display:none"'}>${displayBody}</div>
+    <div id="body-html" class="body-wrap">${displayBody}</div>
     ${hasHtml ? `<div id="body-text" class="body-wrap" style="display:none"><pre style="font-family:inherit;white-space:pre-wrap;margin:0">${bodyText}</pre></div>` : ''}
   </div>
 
