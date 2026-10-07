@@ -2,7 +2,7 @@
   "name": "msg-viewer",
   "displayName": "MSG Viewer",
   "description": "Preview Outlook .msg files with rich HTML rendering — subject, sender, recipients, body, and inline attachments. Includes an MCP server so AI agents can read .msg files too.",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "publisher": "hovecapital",
   "icon": "icon.png",
   "license": "MIT",
